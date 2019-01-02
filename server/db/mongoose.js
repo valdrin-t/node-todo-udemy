@@ -6,6 +6,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbLink, {
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false
 });
 
 module.exports = { mongoose };
