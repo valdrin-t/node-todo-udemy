@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {  
-    var todo = new Todo({
+    let todo = new Todo({
         text: req.body.text
     });
 
@@ -32,7 +32,7 @@ app.get('/todos', (req, res) => {
 });
 
 app.get('/todos/:id', (req, res) => {
-    var id = req.params.id;
+    let id = req.params.id;
 
     if(!ObjectID.isValid(id)){
         return res.status(404).send();
@@ -45,6 +45,22 @@ app.get('/todos/:id', (req, res) => {
     }).catch((e) => {
         res.status(400).send();
     });
+});
+
+app.delete('/todos/:id', (req, res) => {
+    let id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send();
+    }
+    Todo.findByIdAndDelete(id).then((todo) => {
+        if(!todo){
+            return res.status(404).send();
+        }
+        res.send({todo});
+    }).catch((e) => {
+        res.status(400).send();
+    });
+
 });
 
 app.listen(port, () => {
