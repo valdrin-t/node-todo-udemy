@@ -112,7 +112,7 @@ app.post('/users', (req, res) => {
 
 
 app.get('/users/me', authenticate, (req,res) => {
-    req.send(req.user);
+    res.send(req.user);
 });
 
 app.listen(port, () => {
