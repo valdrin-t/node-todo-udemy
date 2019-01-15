@@ -74,7 +74,6 @@ UserSchema.statics.findByCredentials = function (email, password) {
     let User = this;
     return User.findOne({ email }).then((user) => {
         if (!user) {
-            console.log("# No user found");
             return Promise.reject();
         }
         return new Promise((resolve, reject) => {
@@ -83,6 +82,10 @@ UserSchema.statics.findByCredentials = function (email, password) {
                     console.log("# Error with bcrypt ", err);
                     return reject(err);
                 }
+                if(!success) {
+                    return reject();
+                }
+
                 return resolve(user);
             });
         });
