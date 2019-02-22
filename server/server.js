@@ -90,7 +90,7 @@ app.patch('/todos/:id', authenticate, async (req, res) => {
     }
 
     try {
-        const todo = Todo.findOneAndUpdate({
+        const todo = await Todo.findOneAndUpdate({
             _id: id,
             _creator: req.user._id
         }, { $set: body }, { new: true });
